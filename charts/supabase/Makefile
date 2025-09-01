@@ -68,7 +68,12 @@ functions: template
 	-rm -rf $(DST)/functions
 	mv /tmp/supabase/templates/functions $(DST)
 
+.PHONY: meta
+meta: template
+	-rm -rf $(DST)/meta
+	mv /tmp/supabase/templates/meta $(DST)
+
 .PHONY: all
-all: secrets vector db analytics studio kong auth rest realtime storage imgproxy functions
+all: secrets vector db analytics studio kong auth rest realtime storage imgproxy functions meta
 	echo all
 
