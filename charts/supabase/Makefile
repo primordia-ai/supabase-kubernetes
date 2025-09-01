@@ -28,7 +28,12 @@ analytics: template
 	-rm -rf $(DST)/analytics
 	mv /tmp/supabase/templates/analytics $(DST)
 
+.PHONY: studio
+studio: template
+	-rm -rf $(DST)/studio
+	mv /tmp/supabase/templates/studio $(DST)
+
 .PHONY: all
-all: secrets vector db analytics
+all: secrets vector db analytics studio
 	echo all
 
