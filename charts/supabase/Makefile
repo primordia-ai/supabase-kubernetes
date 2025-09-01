@@ -43,7 +43,12 @@ auth: template
 	-rm -rf $(DST)/auth
 	mv /tmp/supabase/templates/auth $(DST)
 
+.PHONY: rest
+rest: template
+	-rm -rf $(DST)/rest
+	mv /tmp/supabase/templates/rest $(DST)
+
 .PHONY: all
-all: secrets vector db analytics studio kong auth
+all: secrets vector db analytics studio kong auth rest
 	echo all
 
