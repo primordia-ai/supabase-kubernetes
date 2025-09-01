@@ -58,7 +58,12 @@ storage: template
 	-rm -rf $(DST)/storage
 	mv /tmp/supabase/templates/storage $(DST)
 
+.PHONY: imgproxy
+imgproxy: template
+	-rm -rf $(DST)/imgproxy
+	mv /tmp/supabase/templates/imgproxy $(DST)
+
 .PHONY: all
-all: secrets vector db analytics studio kong auth rest realtime storage
+all: secrets vector db analytics studio kong auth rest realtime storage imgproxy
 	echo all
 
