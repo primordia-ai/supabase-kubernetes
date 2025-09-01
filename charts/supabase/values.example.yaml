@@ -1,3 +1,4 @@
+---
 secret:
   jwt:
     anonKey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE
@@ -15,52 +16,44 @@ secret:
     database: postgres
   analytics:
     apiKey: your-super-secret-and-long-logflare-key
-
 db:
   enabled: true
   image:
     tag: 15.1.0.147
   livenessProbe:
     exec:
-      command:
-        - pg_isready
-        - -U
-        - postgres
+      command: [pg_isready, -U, postgres]
     initialDelaySeconds: 3
   persistence:
     enabled: false
-
 studio:
   image:
     tag: 20240326-5e5586d
   environment:
-    STUDIO_DEFAULT_ORGANIZATION: "My Organization"
-    STUDIO_DEFAULT_PROJECT: "My Project"
+    STUDIO_DEFAULT_ORGANIZATION: My Organization
+    STUDIO_DEFAULT_PROJECT: My Project
     SUPABASE_PUBLIC_URL: http://example.com/
-    NEXT_PUBLIC_ENABLE_LOGS: "true"
+    NEXT_PUBLIC_ENABLE_LOGS: 'true'
   livenessProbe:
     httpGet:
       path: /api/profile
       port: 3000
     initialDelaySeconds: 3
-
 auth:
   image:
     tag: v2.143.0
   environment:
     API_EXTERNAL_URL: http://example.com
     GOTRUE_SITE_URL: http://example.com
-    GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
-    GOTRUE_MAILER_AUTOCONFIRM: "true"
-    GOTRUE_SMTP_ADMIN_EMAIL: "your-mail@example.com"
-    GOTRUE_SMTP_HOST: "smtp.example.com"
-    GOTRUE_SMTP_PORT: "587"
-    GOTRUE_SMTP_SENDER_NAME: "your-mail@example.com"
-
+    GOTRUE_EXTERNAL_EMAIL_ENABLED: 'true'
+    GOTRUE_MAILER_AUTOCONFIRM: 'true'
+    GOTRUE_SMTP_ADMIN_EMAIL: your-mail@example.com
+    GOTRUE_SMTP_HOST: smtp.example.com
+    GOTRUE_SMTP_PORT: '587'
+    GOTRUE_SMTP_SENDER_NAME: your-mail@example.com
 rest:
   image:
     tag: v12.0.1
-
 realtime:
   image:
     tag: v2.27.5
@@ -69,11 +62,9 @@ realtime:
       path: /
       port: 4000
     initialDelaySeconds: 3
-
 meta:
   image:
     tag: v0.80.0
-
 storage:
   image:
     tag: v0.46.4
@@ -84,21 +75,17 @@ storage:
     initialDelaySeconds: 3
   persistence:
     enabled: false
-
 imgproxy:
   image:
     tag: v3.8.0
   environment:
-    IMGPROXY_ENABLE_WEBP_DETECTION: "true"
+    IMGPROXY_ENABLE_WEBP_DETECTION: 'true'
   livenessProbe:
     exec:
-      command:
-        - imgproxy
-        - health
+      command: [imgproxy, health]
     initialDelaySeconds: 3
   persistence:
     enabled: false
-
 kong:
   image:
     repository: kong
@@ -108,19 +95,19 @@ kong:
     KONG_LOG_LEVEL: info
   ingress:
     enabled: true
-    className: "nginx"
+    className: gce
     annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /
-    tls: []
-      # - secretName: example-ingress-tls
-      #   hosts:
-      #     - example.com
+      kubernetes.io/ingress.class: gce
+      kubernetes.io/ingress.allow-http: 'false'
+      cert-manager.io/cluster-issuer: letsencrypt-lab
+    tls:
+      - secretName: supakong.lab.primordia.ai
+        hosts: [supakong.lab.primordia.ai]
     hosts:
-      - host: example.com
+      - host: supakong.lab.primordia.ai
         paths:
           - path: /
             pathType: Prefix
-
 analytics:
   image:
     tag: 1.4.0
@@ -129,7 +116,6 @@ analytics:
       path: /health
       port: 4000
     initialDelaySeconds: 3
-
 vector:
   image:
     tag: 0.34.0-alpine
@@ -148,7 +134,6 @@ vector:
     - name: pod-logs
       hostPath:
         path: /var/log/pods
-
 functions:
   image:
     tag: v1.41.2

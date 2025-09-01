@@ -33,7 +33,12 @@ studio: template
 	-rm -rf $(DST)/studio
 	mv /tmp/supabase/templates/studio $(DST)
 
+.PHONY: kong
+kong: template
+	-rm -rf $(DST)/kong
+	mv /tmp/supabase/templates/kong $(DST)
+
 .PHONY: all
-all: secrets vector db analytics studio
+all: secrets vector db analytics studio kong
 	echo all
 
