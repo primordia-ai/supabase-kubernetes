@@ -53,7 +53,12 @@ realtime: template
 	-rm -rf $(DST)/realtime
 	mv /tmp/supabase/templates/realtime $(DST)
 
+.PHONY: storage
+storage: template
+	-rm -rf $(DST)/storage
+	mv /tmp/supabase/templates/storage $(DST)
+
 .PHONY: all
-all: secrets vector db analytics studio kong auth rest realtime
+all: secrets vector db analytics studio kong auth rest realtime storage
 	echo all
 
